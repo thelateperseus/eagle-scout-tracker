@@ -9,19 +9,18 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1/scouts")
-class ScoutRegistrationController {
-    private final ScoutRepository repository;
+@RequestMapping("/v1/leaders")
+class LeaderRegistrationController {
+    private final LeaderRepository repository;
 
-    ScoutRegistrationController(ScoutRepository repository) {
+    LeaderRegistrationController(LeaderRepository repository) {
         this.repository = repository;
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    RegisterScoutResponse register(@RequestBody RegisterScoutRequest request) {
-        Scout newScout = repository.save(
-                new Scout(null, request.name(), request.email(), request.birthDate(), request.leaderId()));
-        return new RegisterScoutResponse(newScout.id());
+    RegisterLeaderResponse register(@RequestBody RegisterLeaderRequest request) {
+        Leader newLeader = repository.save(new Leader(null, request.name(), request.email()));
+        return new RegisterLeaderResponse(newLeader.id());
     }
 }

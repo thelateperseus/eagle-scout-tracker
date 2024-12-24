@@ -1,4 +1,4 @@
-package com.example.scout.registration;
+package com.example.scout.award;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -9,19 +9,18 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1/scouts")
-class ScoutRegistrationController {
-    private final ScoutRepository repository;
+@RequestMapping("/v1/awards")
+class AwardController {
+    private final AwardRepository repository;
 
-    ScoutRegistrationController(ScoutRepository repository) {
+    AwardController(AwardRepository repository) {
         this.repository = repository;
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    RegisterScoutResponse register(@RequestBody RegisterScoutRequest request) {
-        Scout newScout = repository.save(
-                new Scout(null, request.name(), request.email(), request.birthDate(), request.leaderId()));
-        return new RegisterScoutResponse(newScout.id());
+    CreateAwardResponse create(@RequestBody CreateAwardRequest request) {
+        Award newAward = repository.save(new Award(null, request.scoutId(), request.badgeId(), request.dateAwarded()));
+        return new CreateAwardResponse(newAward.id());
     }
 }
